@@ -1,0 +1,20 @@
+#!/bin/sh
+DEVELOPER_NAME=$(whoami)
+USERNAME=kalpana
+TGT_IP=192.168.1.193
+if [ "$1" = "all" ]; then
+ make $ARGUMENT all 
+fi
+if [ "$1" = "clean" ]; then
+ make $ARGUMENT clean;sync
+fi
+if [ "$1" = "flash" ]; then
+ scp ./out/test_project.bin $USERNAME@$TGT_IP:"/home/$USERNAME/Desktop/NUEVOSOL/"
+ ssh $USERNAME@$TGT_IP 'sync'
+ ssh $USERNAME@$TGT_IP "dfu-util -a 0 -s 0x08000000 -D /home/$USERNAME/Desktop/NUEVOSOL/test_project.bin"
+  #ssh $USERNAME@$TGT_IP "/home/kalpana/Downloads/stm32flash-code/./stm32flash -e 6 -w /home/kalpana/Desktop/NUEVOSOL/nuevosol_tracker.bin -v -g 0x8000000 /dev/ttyUSB0" 
+fi
+if [ "$1" = "push" ]; then
+  echo $2
+  /bin/dorepo.sh $1 $2 $3 $4 $5
+fi
