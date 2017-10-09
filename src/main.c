@@ -98,31 +98,7 @@ int main(void)
 	/* -3- Toggle PG.6, PG.8, PI.9 and PC.7 IOs in an infinite loop */
 	printf("init\r\n");
 	while (1)
-	{
-		led_init();
-		HAL_UART_Receive(&UartHandle,&ch,1,0xff);
-		if(ch != 0) {
-			if ((ch=='\r')||(ch =='\n')){
-				ch=0;
-				i=0;
-				val = atoi(Data);
-				bzero(Data,sizeof(Data));
-				if (val<=100){
-					pwm_start(val);
-				}
-				else
-					printf("PLEASE ENTER A VALUE BETWEEN 1 - 100\r\n");
-			}
-			else if((ch < 0x30) || (ch > 0x39)){
-				printf("ONLY NUMBERS ACCEPTED\r\n");
-			}
-			else{
-				Data[i++]=ch;
-				printf("%c",ch);fflush(stdout);
-				ch=0;
-			}
-		}
-	}
+	{	
 }
 
 void clock_init (void)
